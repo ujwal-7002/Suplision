@@ -1,9 +1,13 @@
 var helicopterIMG, helicopterSprite, packageSprite,packageIMG;
-var packageBody,ground
+var packageBody,ground;
+var bWallL , bWallRSprite;
+var bWallR , bWallRSprite;
+var bBase, bBaseSprite;
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
+
 
 function preload()
 {
@@ -27,11 +31,17 @@ function setup() {
 	groundSprite=createSprite(width/2, height-35, width,10);
 	groundSprite.shapeColor=color(255)
 
+	bBaseSprite=createSprite(400,665,200,20);
+	bBaseSprite.shapeColor=color("red")
+	bWallRSprite=createSprite(300,625,20,100);
+	bWallRSprite.shapeColor=color("red");
+	bWallLSprite=createSprite(500,625,20,100);
+	bWallLSprite.shapeColor=color("red");
 
 	engine = Engine.create();
 	world = engine.world;
 
-	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.6, isStatic:true});
+	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0, isStatic:true});
 	World.add(world, packageBody);
 	
 
@@ -39,8 +49,13 @@ function setup() {
 	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
  	World.add(world, ground);
 
-	
 
+	bBase = Bodies.rectangle(400,665,200,20,{isStatic:true});
+	World.add(world, bBase);
+	bWallR = Bodies.rectangle(300,625,20,100,{isStatic:true});
+	World.add(world, bWallR);
+	bWallL = Bodies.rectangle(500,625,20,100,{isStatic:true});
+	World.add(world, bWallL);
 
 	Engine.run(engine);
   
@@ -58,10 +73,10 @@ function draw() {
 		isStatic: false
 	}
 	var package ={
-		restitution: 3.0
+		restitution: 0
 	}
 	World.add(world,package);
-
+	
 	keyPressed();
 	drawSprites();
  
